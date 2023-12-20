@@ -117,7 +117,7 @@ async function main() {
     pageHTMLs.map((html) => getEmailAddressesFromString(html))
   );
 
-  // Flatten, filter remove duplicates and lowercase
+  // Flatten, filter, remove duplicates and make it all lowercase
   console.log("FILTERING EMAIL ADDRESSES...");
   const emailAddresses = [...new Set(emailAddressesRaw.flat(1))]
     .filter((address) => address !== null)
