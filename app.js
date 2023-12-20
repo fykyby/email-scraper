@@ -90,12 +90,12 @@ async function main() {
   console.log("GETTING INITIAL TARGET HTML...");
   const html = await getPageHTML(TARGET_URL);
 
-  console.log("GETTING URLS...");
   // Get URLs from target URL
+  console.log("GETTING URLS...");
   const pageURLsRaw = getPageURLs(html);
 
-  console.log("ADDING ${CONTACT_PATH} TO URLS...");
   // Add URLs with contact path
+  console.log("ADDING ${CONTACT_PATH} TO URLS...");
   const pageURLs = pageURLsRaw
     .map((url) => {
       let cleanURL = url;
@@ -107,18 +107,18 @@ async function main() {
     })
     .flat(1);
 
-  console.log("GETTING HTMLS...");
   // Get HTML for each obtained URL
+  console.log("GETTING HTMLS...");
   const pageHTMLs = await Promise.all(pageURLs.map((url) => getPageHTML(url)));
 
-  console.log("GETTING EMAIL ADDRESSES...");
   // Get email addresses from HTMLs
+  console.log("GETTING EMAIL ADDRESSES...");
   const emailAddressesRaw = await Promise.all(
     pageHTMLs.map((html) => getEmailAddressesFromString(html))
   );
 
-  console.log("FILTERING EMAIL ADDRESSES...");
   // Flatten, filter remove duplicates and lowercase
+  console.log("FILTERING EMAIL ADDRESSES...");
   const emailAddresses = [...new Set(emailAddressesRaw.flat(1))]
     .filter((address) => address !== null)
     .map((address) => address.toLowerCase());
